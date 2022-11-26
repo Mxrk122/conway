@@ -68,16 +68,19 @@ class Raycaster(object):
       for j in range(len(nxt[0])):
 
         # Encontrar coordendas en la pantalla
-        x = (j * self.cell_size)
-        y = (i * self.cell_size)
+        x = j * self.cell_size
+        y = i * self.cell_size
+        neighbors = []
 
         # Celdas cercanas a cada 1 y creacion de la matriz de cada 1
         celula = current_state[i][j]
         prox_cells = current_state[(i - 1) : (i + 2)]
-        neighbors = []
+        
+        # Analizar las celulas proximas a la actual
         for row in prox_cells:
           neighbors.append(row[(j - 1) : (j + 2)])
-        neighbor_count = sum([sum(row) for row in neighbors]) - celula
+        sum_prox_cells = sum([sum(row) for row in neighbors])
+        neighbor_count = sum_prox_cells - celula
 
         # Añadir los 1 segun el caso
         if ((current_state[i][j] == 1) and ((neighbor_count < 2) or (neighbor_count > 3))):
